@@ -9,7 +9,9 @@ export const SOCIAL_LINKS = {
   instagram: import.meta.env.VITE_INSTAGRAM_URL || "https://www.instagram.com/daksh.sangwan?igsh=MWwyd3YzMGdhendhYg==",
 } as const;
 
-export const SITE_URL = import.meta.env.VITE_SITE_URL || "http://localhost:5173";
+export const SITE_URL =
+  import.meta.env.VITE_SITE_URL ||
+  (import.meta.env.PROD ? "" : "http://localhost:5173");
 
 // Location
 export const LOCATION = "New Delhi, India";

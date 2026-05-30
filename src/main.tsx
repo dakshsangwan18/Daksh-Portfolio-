@@ -5,8 +5,10 @@ import App from "./App.tsx";
 import { HelmetProvider } from "@dr.pogodin/react-helmet";
 import { validateEnvironmentVariables } from "./utils/validateEnv";
 
-// Validate environment variables on app startup
-validateEnvironmentVariables();
+// Validate environment variables on app startup (dev only)
+if (import.meta.env.DEV) {
+  validateEnvironmentVariables();
+}
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

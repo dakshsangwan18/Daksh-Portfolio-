@@ -16,6 +16,30 @@ const SEO: React.FC<SEOProps> = ({
   image = "/PfLogo.png",
   url = SITE_URL,
 }) => {
+  const baseUrl = (() => {
+    if (SITE_URL.startsWith("http://") || SITE_URL.startsWith("https://")) {
+      return SITE_URL;
+    }
+    if (typeof window !== "undefined") {
+      return window.location.origin;
+    }
+    return "";
+  })();
+
+  const resolveAbsoluteUrl = (value: string) => {
+    if (!value) return value;
+    if (value.startsWith("http://") || value.startsWith("https://")) return value;
+    if (!baseUrl) return value;
+    try {
+      return new URL(value, baseUrl).toString();
+    } catch {
+      return value;
+    }
+  };
+
+  const resolvedUrl = resolveAbsoluteUrl(url || "/");
+  const resolvedImage = resolveAbsoluteUrl(image);
+
   // Structured data for better SEO
   const structuredData = {
     "@context": "https://schema.org",
@@ -23,8 +47,8 @@ const SEO: React.FC<SEOProps> = ({
     name: "Daksh Sangwan",
     jobTitle: "Full Stack Developer",
     description: description,
-    url: url,
-    image: image,
+    url: resolvedUrl,
+    image: resolvedImage,
     sameAs: [
       "https://github.com/DaKSH18r",
       "https://www.linkedin.com/in/daksh-sangwan-129783255",
@@ -53,17 +77,17 @@ const SEO: React.FC<SEOProps> = ({
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />
-      <meta property="og:url" content={url} />
+      <meta property="og:url" content={resolvedUrl} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
+      <meta property="og:image" content={resolvedImage} />
 
       {/* Twitter */}
       <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content={url} />
+      <meta property="twitter:url" content={resolvedUrl} />
       <meta property="twitter:title" content={title} />
       <meta property="twitter:description" content={description} />
-      <meta property="twitter:image" content={image} />
+      <meta property="twitter:image" content={resolvedImage} />
 
       {/* Structured Data */}
       <script type="application/ld+json">

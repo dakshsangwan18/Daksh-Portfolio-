@@ -4,7 +4,7 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-import { lazy, useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { AnimatePresence, motion, type Transition } from "framer-motion";
 import { useThemeStore } from "./Store/useThemeStore";
 import Layout from "./Components/Layout/Layout";
@@ -106,7 +106,15 @@ const App = () => {
       <TooltipProvider delayDuration={0} skipDelayDuration={0}>
         <Router>
           <Layout>
-            <AnimatedRoutes />
+            <Suspense
+              fallback={
+                <div className="py-10 text-center text-sm text-gray-500 dark:text-gray-400">
+                  Loading...
+                </div>
+              }
+            >
+              <AnimatedRoutes />
+            </Suspense>
           </Layout>
         </Router>
       </TooltipProvider>
