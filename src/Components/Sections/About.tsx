@@ -1,5 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { DownloadIcon } from "../icons/Icons";
+import { trackDownload } from "../../utils/analytics";
 
 const About: React.FC = () => {
   return (
@@ -79,6 +81,23 @@ const About: React.FC = () => {
             Open to new opportunities and collaborations
           </span>
         </button>
+
+        {/* Resume download */}
+        <a
+          href="/Daksh_Resume-3.pdf"
+          download
+          onClick={() => trackDownload("Daksh_Resume-3.pdf")}
+          className="inline-flex items-center justify-center gap-2 sm:gap-3 rounded-xl 
+                     border border-gray-200 dark:border-white/10 
+                     bg-gray-50 dark:bg-white/5 
+                     px-3 sm:px-4 py-2 text-xs sm:text-sm 
+                     text-gray-700 dark:text-gray-200 
+                     hover:bg-gray-100 dark:hover:bg-white/10 
+                     transition-colors"
+        >
+          <DownloadIcon size={16} aria-hidden="true" />
+          <span className="whitespace-nowrap">Resume</span>
+        </a>
       </div>
     </motion.section>
   );
